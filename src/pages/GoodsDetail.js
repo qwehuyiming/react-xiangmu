@@ -3,6 +3,7 @@ import { NavBar, Icon, Carousel } from 'antd-mobile';
 import { getGoodsInfo } from "../api";
 
 import { connect } from "react-redux";
+import { cart_add } from "../store/actionCreator";
 
 class GoodsDetail extends Component {
   state = {
@@ -144,9 +145,9 @@ class GoodsDetail extends Component {
           <div className="btm_item btm_cart">
             <span className="iconfont icon-gouwuche"></span>
             <p>购物车</p>
-            <span className="badge">2</span>
+            <span className="badge" style={{display:this.props.cartLength?"block":"none"}} >{this.props.cartLength}</span>
           </div>
-          <div className="btm_item btm_cart_add">
+          <div className="btm_item btm_cart_add" onClick={()=>this.props.handleCartAdd(this.state.goodsinfo)}>
             加入购物车
           </div>
           <div className="btm_item btm_buy">
@@ -208,9 +209,20 @@ class GoodsDetail extends Component {
 
 
 const mapStateToProps = (state) => {
+  // 种类的数量也等于购物车的长度 
   return {
-    num: state.cartReducer.num
+   cartLength:state.cartReducer.cartList.length
   }
 }
 
-export default connect(mapStateToProps, null)(GoodsDetail);
+// 将 行为映射到 props中
+const mapDispatch=(dispatch)=>{
+  return {
+    handleCartAdd:(goodsObj)=>{
+      console.log(goodsObj);
+      // 会触发到  管理员上 
+      dispatch(cart_add(goodsObj));
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatch)(GoodsDetail);
