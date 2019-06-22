@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { NavBar, Icon, Carousel } from 'antd-mobile';
 import { getGoodsInfo } from "../api";
+
+import { connect } from "react-redux";
+
 class GoodsDetail extends Component {
   state = {
     imgHeight: 176,
@@ -27,6 +30,7 @@ class GoodsDetail extends Component {
   render() {
     return (
       <Fragment>
+      
         {/* 导航栏 开始 */}
         <NavBar
           mode="dark"
@@ -35,7 +39,7 @@ class GoodsDetail extends Component {
           onLeftClick={() => this.props.history.go(-1)}
         >商品详情</NavBar>
         {/* 导航栏 结束 */}
-
+     
         {/* 轮播图 开始 */}
         <Carousel
           autoplay
@@ -201,4 +205,12 @@ class GoodsDetail extends Component {
     );
   }
 }
-export default GoodsDetail;
+
+
+const mapStateToProps = (state) => {
+  return {
+    num: state.cartReducer.num
+  }
+}
+
+export default connect(mapStateToProps, null)(GoodsDetail);
