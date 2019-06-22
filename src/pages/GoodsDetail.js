@@ -121,16 +121,13 @@ class GoodsDetail extends Component {
     }
   }
   .goods_product {
-
-    img {
-      height: auto;
-      max-width: 100%;
-    }
+    
+    margin-bottom:45px;
   }
 }
             `}
           </style>
-   
+
         </div>
         {/* 商品信息 结束 */}
 
@@ -149,7 +146,7 @@ class GoodsDetail extends Component {
             加入购物车
           </div>
           <div className="btm_item btm_buy">
-           立即购买
+            立即购买
           </div>
           <style jsx>
 

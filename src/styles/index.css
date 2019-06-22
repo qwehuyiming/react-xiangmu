@@ -7,6 +7,7 @@ img {
   width: 100%;
   /* 去除图片的3px间隙 */
   display: block;
+  height: auto;
 }
 a {
   /* 继承  */
