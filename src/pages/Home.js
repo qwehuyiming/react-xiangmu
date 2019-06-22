@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-
+//  可以让我们的Home组件获取到路由信息对象 history 和match
+import { withRouter } from "react-router-dom";
 import { getGoods, getGoodsGrouup } from "../api";
 import { Carousel } from 'antd-mobile';
 
@@ -37,6 +38,7 @@ class Home extends Component {
 
 
   render() {
+    console.log(this.props);
     return (
       <Fragment>
         {/* 轮播图 开始 */}
@@ -47,7 +49,8 @@ class Home extends Component {
           {this.state.sliderlist.map(val => (
             <a
               key={val.id}
-              href="#"
+              href="javascript:;"
+              onClick={()=>this.props.history.push("/GoodsDetail/"+val.id)}
               style={{ display: 'inline-block', width: '100%', height: this.state.imgHeight }}
             >
               <img
@@ -69,7 +72,7 @@ class Home extends Component {
           <div className="recommend_goods_title">推荐商品</div>
           <div className="recommend_goods_content">
             {this.state.toplist.map(v =>
-              <a key={v.id} href="javascript:;" className="recommend_goods_item" >
+              <a key={v.id} href="javascript:;" onClick={()=>this.props.history.push("/GoodsDetail/"+v.id)}  className="recommend_goods_item" >
                 <div className="recommend_img_wrap"> <img src={v.img_url} alt="" /> </div>
                 <div className="recommend_goods_name">
                   <p>{v.title}</p>
@@ -121,8 +124,8 @@ class Home extends Component {
                <div key={v1.level1cateid} className="goods_group_item">
                <div className="goods_group_item_title">{v1.catetitle}</div>
                <div className="goods_group_item_content">
-                 {v1.datas.map(v2=>
-                  <a href="javascript:;" key={v2.artID} className="goods_item" >
+                 {v1.datas.map(v2=> 
+                  <a href="javascript:;" onClick={()=>this.props.history.push("/GoodsDetail/"+v2.artID)} key={v2.artID} className="goods_item" >
                     <img src={v2.img_url} alt=""/>
                     <div className="artTitle">{v2.artTitle}</div>                    
                     <div className="goods_price">
@@ -201,4 +204,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);
