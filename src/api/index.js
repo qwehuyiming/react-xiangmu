@@ -18,5 +18,8 @@ axios.interceptors.response.use(function (response) {
   return Promise.reject(error);
 });
 
-// 1 获取轮播图数据
+// 1 获取轮播图数据 和 推进商品数据
 export const getGoods=()=>axios.get("goods/gettopdata/goods");
+
+// 2 首页 商品列表
+export const getGoodsGrouup=()=>axios.get("goods/getgoodsgroup");
