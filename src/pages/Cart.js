@@ -145,7 +145,7 @@ class Cart extends Component {
           {/* 总价 结束 */}
           {/* 结算 开始 */}
           <div className="pay_wrap">
-            结算({1})
+            结算({this.props.selectdNums})
           </div>
           {/* 结算 结束 */}
 
@@ -205,7 +205,9 @@ const mapStateToProps = (state) => {
   return {
     carts: state.cartReducer.cartList,
     // 只要购物车中的每一个商品都是选中状态，那么全选的按钮 就是 选中状态 
-    allChecked:state.cartReducer.cartList.every(v=>v.isChecked)
+    allChecked:state.cartReducer.cartList.every(v=>v.isChecked),
+    // 结算中的 数字 => 购物车中 选中了的数组的长度  
+    selectdNums:state.cartReducer.cartList.filter(v=>v.isChecked).length
   }
 }
 
