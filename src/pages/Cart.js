@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { NavBar, Icon, SwipeAction, List, Checkbox, Modal } from 'antd-mobile';
 
 import { withRouter } from "react-router-dom";
-import { cart_check, cart_all_check, cart_num_update,cart_num_delete } from "../store/actionCreator";
+import { cart_check, cart_all_check, cart_num_update, cart_num_delete } from "../store/actionCreator";
 const CheckboxItem = Checkbox.CheckboxItem;
 const alert = Modal.alert;
 class Cart extends Component {
@@ -36,7 +36,7 @@ class Cart extends Component {
                       },
                       {
                         text: '删除',
-                        onPress: () => console.log('delete'),
+                        onPress: () => { this.props.handleDisDelete(v.id) },
                         style: { backgroundColor: '#F4333C', color: 'white' },
                       },
                     ]}
@@ -217,7 +217,7 @@ const mapStateToProps = (state) => {
   return {
     carts: state.cartReducer.cartList,
     // 只要购物车中的每一个商品都是选中状态，那么全选的按钮 就是 选中状态 
-    allChecked: state.cartReducer.cartList.length&&state.cartReducer.cartList.every(v => v.isChecked),
+    allChecked: state.cartReducer.cartList.length && state.cartReducer.cartList.every(v => v.isChecked),
     // 结算中的 数字 => 购物车中 选中了的数组的长度  
     selectdNums: state.cartReducer.cartList.filter(v => v.isChecked).length,
     // 总的价格( 被选中的单价 * 数量 的叠加总和)
@@ -245,15 +245,29 @@ const mapDispatch = (dispatch) => {
       if (unit === -1 && num === 1) {
         alert('警告', '您确定删除吗?', [
           { text: '取消', onPress: () => console.log('cancel') },
-          { text: '删除', onPress: () => {
-            // 1 只需要传递id就可以了  删除数据
-            dispatch(cart_num_delete(id));
-          }},
+          {
+            text: '删除', onPress: () => {
+              // 1 只需要传递id就可以了  删除数据
+              dispatch(cart_num_delete(id));
+            }
+          },
         ])
       } else {
         // 编辑数量
         dispatch(cart_num_update(id, unit));
       }
+    },
+    // 滑动删除的逻辑  
+    handleDisDelete: (id) => {
+      alert('警告', '您确定删除吗?', [
+        { text: '取消', onPress: () => console.log('cancel') },
+        {
+          text: '删除', onPress: () => {
+            // 1 只需要传递id就可以了  删除数据
+            dispatch(cart_num_delete(id));
+          }
+        },
+      ])
     }
   }
 }
