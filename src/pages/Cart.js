@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
-import { NavBar, Icon, SwipeAction, List, Checkbox } from 'antd-mobile';
+import { NavBar, Icon, SwipeAction, List, Checkbox, Modal } from 'antd-mobile';
 
 import { withRouter } from "react-router-dom";
-import { cart_check, cart_all_check,cart_num_update } from "../store/actionCreator";
+import { cart_check, cart_all_check, cart_num_update,cart_num_delete } from "../store/actionCreator";
 const CheckboxItem = Checkbox.CheckboxItem;
+const alert = Modal.alert;
 class Cart extends Component {
   render() {
 
@@ -65,9 +66,9 @@ class Cart extends Component {
                       {/* 3 商品名称 结束 */}
                       {/* 4 商品数量 开始 */}
                       <div className="goods_num_wrap">
-                        <span onClick={()=>this.props.handleCartNumUpdate(v.id,-1)} className="iconfont icon-minus btn_substr "></span>
+                        <span onClick={() => this.props.handleCartNumUpdate(v.id, -1, v.num)} className="iconfont icon-minus btn_substr "></span>
                         <span className="goods_num">{v.num}</span>
-                        <span onClick={()=>this.props.handleCartNumUpdate(v.id,1)} className="iconfont icon-plus btn_add "></span>
+                        <span onClick={() => this.props.handleCartNumUpdate(v.id, 1)} className="iconfont icon-plus btn_add "></span>
 
                       </div>
                       {/* 4 商品数量 结束 */}
@@ -216,7 +217,7 @@ const mapStateToProps = (state) => {
   return {
     carts: state.cartReducer.cartList,
     // 只要购物车中的每一个商品都是选中状态，那么全选的按钮 就是 选中状态 
-    allChecked: state.cartReducer.cartList.every(v => v.isChecked),
+    allChecked: state.cartReducer.cartList.length&&state.cartReducer.cartList.every(v => v.isChecked),
     // 结算中的 数字 => 购物车中 选中了的数组的长度  
     selectdNums: state.cartReducer.cartList.filter(v => v.isChecked).length,
     // 总的价格( 被选中的单价 * 数量 的叠加总和)
@@ -236,8 +237,23 @@ const mapDispatch = (dispatch) => {
       dispatch(cart_all_check(checked));
     },
     // 购物车数量的修改
-    handleCartNumUpdate:(id,unit)=>{
-      dispatch(cart_num_update(id,unit));
+
+    handleCartNumUpdate: (id, unit, num) => {
+
+
+      // 判断是否为删除操作
+      if (unit === -1 && num === 1) {
+        alert('警告', '您确定删除吗?', [
+          { text: '取消', onPress: () => console.log('cancel') },
+          { text: '删除', onPress: () => {
+            // 1 只需要传递id就可以了  删除数据
+            dispatch(cart_num_delete(id));
+          }},
+        ])
+      } else {
+        // 编辑数量
+        dispatch(cart_num_update(id, unit));
+      }
     }
   }
 }

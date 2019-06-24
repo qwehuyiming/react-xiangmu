@@ -1,4 +1,4 @@
-import { CART_ADD, CART_CHECKED, CART_ALL_CHECK, CART_NUM_UPDATE } from "../actionTypes";
+import { CART_ADD, CART_CHECKED, CART_ALL_CHECK, CART_NUM_UPDATE, CART_NUM_DELETE } from "../actionTypes";
 
 // 1 负责新增购物车  
 export const cart_add = (goodsObj) => {
@@ -41,5 +41,16 @@ export const cart_num_update = (id, unit) => {
   return {
     type: CART_NUM_UPDATE,
     value: { id, unit }
+  }
+}
+
+/**
+ * 执行删除购物车
+ * @param {Number} id 要删除的id
+ */
+export const cart_num_delete = (id) => {
+  return {
+    type: CART_NUM_DELETE,
+    value: { id }
   }
 }

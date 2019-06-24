@@ -1,20 +1,25 @@
 // 1 购物车的添加 action  类型
-export const CART_ADD="CART_ADD";
+export const CART_ADD = "CART_ADD";
 
 
 /**
  * 购物车 切换选中
  */
-export const CART_CHECKED="CART_CHECKED";
+export const CART_CHECKED = "CART_CHECKED";
 
 
 /**
  * 全选的按钮功能 
  */
-export const CART_ALL_CHECK="CART_ALL_CHECK";
+export const CART_ALL_CHECK = "CART_ALL_CHECK";
 
 
 /**
  * 购物车 的数量的更新 
  */
-export const CART_NUM_UPDATE="CART_NUM_UPDATE";
+export const CART_NUM_UPDATE = "CART_NUM_UPDATE";
+
+/**
+ * 购物车 删除
+ */
+export const CART_NUM_DELETE = "CART_NUM_DELETE";

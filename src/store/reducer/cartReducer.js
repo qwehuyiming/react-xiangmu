@@ -1,4 +1,4 @@
-import { CART_ADD ,CART_CHECKED,CART_ALL_CHECK,CART_NUM_UPDATE} from "../actionTypes";
+import { CART_ADD, CART_CHECKED, CART_ALL_CHECK, CART_NUM_UPDATE, CART_NUM_DELETE } from "../actionTypes";
 import { visible } from "ansi-colors";
 
 
@@ -8,7 +8,7 @@ const defaultState = {
       // 商品的id
       id: 110,
       // 单价
-      price: 100,
+      price: 111,
       // 数量
       num: 1,
       // 名称
@@ -21,7 +21,7 @@ const defaultState = {
       // 商品的id
       id: 120,
       // 单价
-      price: 100,
+      price: 222,
       // 数量
       num: 1,
       // 名称
@@ -34,7 +34,7 @@ const defaultState = {
       // 商品的id
       id: 130,
       // 单价
-      price: 100,
+      price: 333,
       // 数量
       num: 1,
       // 名称
@@ -83,7 +83,7 @@ export default (state = defaultState, action) => {
       return newState;
     }
       break;
-    case CART_CHECKED:{
+    case CART_CHECKED: {
       /* 
       1 获取要操作的商品的id
       2 找到 store中的购物车数组中的商品对象
@@ -91,15 +91,15 @@ export default (state = defaultState, action) => {
       4 返回全新的state
        */
 
-       let newState=JSON.parse(JSON.stringify(state));
-       let index=newState.cartList.findIndex(v=>v.id===action.value.id);
-       newState.cartList[index].isChecked=!newState.cartList[index].isChecked;
-       return newState;
+      let newState = JSON.parse(JSON.stringify(state));
+      let index = newState.cartList.findIndex(v => v.id === action.value.id);
+      newState.cartList[index].isChecked = !newState.cartList[index].isChecked;
+      return newState;
     }
-    break;
-    case CART_ALL_CHECK:{
-      let newState=JSON.parse(JSON.stringify(state));
-      newState.cartList.forEach(v=>v.isChecked=action.value.checked);
+      break;
+    case CART_ALL_CHECK: {
+      let newState = JSON.parse(JSON.stringify(state));
+      newState.cartList.forEach(v => v.isChecked = action.value.checked);
       return newState;
 
     }
@@ -110,9 +110,24 @@ export default (state = defaultState, action) => {
         2 直接修改数量
         3 返回newState
          */
-        let newState=JSON.parse(JSON.stringify(state));
-        let index=newState.cartList.findIndex(v=>v.id===action.value.id);
-        newState.cartList[index].num+=action.value.unit;
+        let newState = JSON.parse(JSON.stringify(state));
+        let index = newState.cartList.findIndex(v => v.id === action.value.id);
+        newState.cartList[index].num += action.value.unit;
+        return newState;
+      }
+    case CART_NUM_DELETE:
+      {
+        /* 
+        1 复制一个新的state
+        2 获取要操作的购物车对象
+        3 执行删除操作
+        4 返回一个新的state
+         */
+        let newState = JSON.parse(JSON.stringify(state));
+        let index = newState.cartList.findIndex(v => v.id === action.value.id);
+        // 数组的删除
+        // newState.cartList.splice("要删除的索引","删除几个");
+        newState.cartList.splice(index, 1);
         return newState;
       }
     default:
