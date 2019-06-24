@@ -1,4 +1,5 @@
-import { CART_ADD ,CART_CHECKED,CART_ALL_CHECK} from "../actionTypes";
+import { CART_ADD ,CART_CHECKED,CART_ALL_CHECK,CART_NUM_UPDATE} from "../actionTypes";
+import { visible } from "ansi-colors";
 
 
 const defaultState = {
@@ -102,6 +103,18 @@ export default (state = defaultState, action) => {
       return newState;
 
     }
+    case CART_NUM_UPDATE:
+      {
+        /* 
+        1 获取被修改的商品的对象
+        2 直接修改数量
+        3 返回newState
+         */
+        let newState=JSON.parse(JSON.stringify(state));
+        let index=newState.cartList.findIndex(v=>v.id===action.value.id);
+        newState.cartList[index].num+=action.value.unit;
+        return newState;
+      }
     default:
       break;
   }

@@ -1,4 +1,4 @@
-import { CART_ADD, CART_CHECKED, CART_ALL_CHECK } from "../actionTypes";
+import { CART_ADD, CART_CHECKED, CART_ALL_CHECK, CART_NUM_UPDATE } from "../actionTypes";
 
 // 1 负责新增购物车  
 export const cart_add = (goodsObj) => {
@@ -28,5 +28,18 @@ export const cart_all_check = (checked) => {
   return {
     type: CART_ALL_CHECK,
     value: { checked }
+  }
+}
+
+
+/**
+ * 修改购物车的商品的购买数量
+ * @param {Number} id 被操作的商品的id
+ * @param {Number} unit 修改为多少
+ */
+export const cart_num_update = (id, unit) => {
+  return {
+    type: CART_NUM_UPDATE,
+    value: { id, unit }
   }
 }

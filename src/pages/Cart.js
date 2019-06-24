@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { NavBar, Icon, SwipeAction, List, Checkbox } from 'antd-mobile';
 
 import { withRouter } from "react-router-dom";
-import { cart_check, cart_all_check } from "../store/actionCreator";
+import { cart_check, cart_all_check,cart_num_update } from "../store/actionCreator";
 const CheckboxItem = Checkbox.CheckboxItem;
 class Cart extends Component {
   render() {
@@ -65,9 +65,9 @@ class Cart extends Component {
                       {/* 3 商品名称 结束 */}
                       {/* 4 商品数量 开始 */}
                       <div className="goods_num_wrap">
-                        <span className="iconfont icon-minus btn_substr "></span>
+                        <span onClick={()=>this.props.handleCartNumUpdate(v.id,-1)} className="iconfont icon-minus btn_substr "></span>
                         <span className="goods_num">{v.num}</span>
-                        <span className="iconfont icon-plus btn_add "></span>
+                        <span onClick={()=>this.props.handleCartNumUpdate(v.id,1)} className="iconfont icon-plus btn_add "></span>
 
                       </div>
                       {/* 4 商品数量 结束 */}
@@ -234,6 +234,10 @@ const mapDispatch = (dispatch) => {
       // 获取到全选按钮的选中状态
       let { checked } = e.target;
       dispatch(cart_all_check(checked));
+    },
+    // 购物车数量的修改
+    handleCartNumUpdate:(id,unit)=>{
+      dispatch(cart_num_update(id,unit));
     }
   }
 }
