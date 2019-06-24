@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { NavBar, Icon, Carousel } from 'antd-mobile';
+import { NavBar, Icon, Carousel,Toast } from 'antd-mobile';
 import { getGoodsInfo } from "../api";
 
 import { connect } from "react-redux";
@@ -142,7 +142,7 @@ class GoodsDetail extends Component {
             <span className="iconfont icon-kefu"></span>
             <p>客服</p>
           </div>
-          <div className="btm_item btm_cart">
+          <div className="btm_item btm_cart" onClick={()=>{this.props.history.push("/Cart")}}>
             <span className="iconfont icon-gouwuche"></span>
             <p>购物车</p>
             <span className="badge" style={{display:this.props.cartLength?"block":"none"}} >{this.props.cartLength}</span>
@@ -219,9 +219,12 @@ const mapStateToProps = (state) => {
 const mapDispatch=(dispatch)=>{
   return {
     handleCartAdd:(goodsObj)=>{
-      console.log(goodsObj);
+  
       // 会触发到  管理员上 
       dispatch(cart_add(goodsObj));
+
+      // 轻提示
+      Toast.info("添加成功");
     }
   }
 }
