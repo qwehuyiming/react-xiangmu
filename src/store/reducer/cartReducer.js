@@ -13,7 +13,7 @@ const defaultState = {
       // 名称
       goods_name: "手机",
       // 图片的路径
-      img_url: "11",
+      img_url: "http://react.zbztb.cn/upload/201504/20/thumb_201504200119256512.jpg",
       isChecked: false
     }
   ]
