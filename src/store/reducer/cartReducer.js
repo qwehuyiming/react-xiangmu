@@ -5,7 +5,33 @@ const defaultState = {
   cartList: [
     {
       // 商品的id
-      id: 100,
+      id: 110,
+      // 单价
+      price: 100,
+      // 数量
+      num: 99,
+      // 名称
+      goods_name: "手机",
+      // 图片的路径
+      img_url: "http://react.zbztb.cn/upload/201504/20/thumb_201504200119256512.jpg",
+      isChecked: false
+    },
+    {
+      // 商品的id
+      id: 120,
+      // 单价
+      price: 100,
+      // 数量
+      num: 99,
+      // 名称
+      goods_name: "手机",
+      // 图片的路径
+      img_url: "http://react.zbztb.cn/upload/201504/20/thumb_201504200119256512.jpg",
+      isChecked: false
+    },
+    {
+      // 商品的id
+      id: 130,
       // 单价
       price: 100,
       // 数量
