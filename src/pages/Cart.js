@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { NavBar, Icon, SwipeAction, List, Checkbox } from 'antd-mobile';
 
 import { withRouter } from "react-router-dom";
-import { cart_check } from "../store/actionCreator";
+import { cart_check,cart_all_check } from "../store/actionCreator";
 const CheckboxItem = Checkbox.CheckboxItem;
 class Cart extends Component {
   render() {
@@ -135,7 +135,7 @@ class Cart extends Component {
         <div className="btm_tool">
           {/* 全选 开始 */}
           <div className="all_chk_wrap">
-            <CheckboxItem> 全选 </CheckboxItem>
+            <CheckboxItem checked={this.props.allChecked} onChange={this.props.handleCartAllCheck} > 全选 </CheckboxItem>
           </div>
           {/* 全选 结束 */}
           {/* 总价 开始 */}
@@ -198,10 +198,14 @@ class Cart extends Component {
   }
 }
 
+
+
 const mapStateToProps = (state) => {
   // 种类的数量也等于购物车的长度 
   return {
-    carts: state.cartReducer.cartList
+    carts: state.cartReducer.cartList,
+    // 只要购物车中的每一个商品都是选中状态，那么全选的按钮 就是 选中状态 
+    allChecked:state.cartReducer.cartList.every(v=>v.isChecked)
   }
 }
 
@@ -209,6 +213,12 @@ const mapDispatch=(dispatch)=>{
   return {
     handleCartCheck:(id)=>{
       dispatch(cart_check(id));
+    },
+    // 全选
+    handleCartAllCheck:(e)=>{
+      // 获取到全选按钮的选中状态
+      let {checked}=e.target;
+      dispatch(cart_all_check(checked));
     }
   }
 }

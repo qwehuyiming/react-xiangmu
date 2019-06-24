@@ -1,4 +1,4 @@
-import { CART_ADD ,CART_CHECKED} from "../actionTypes";
+import { CART_ADD ,CART_CHECKED,CART_ALL_CHECK} from "../actionTypes";
 
 
 const defaultState = {
@@ -96,6 +96,12 @@ export default (state = defaultState, action) => {
        return newState;
     }
     break;
+    case CART_ALL_CHECK:{
+      let newState=JSON.parse(JSON.stringify(state));
+      newState.cartList.forEach(v=>v.isChecked=action.value.checked);
+      return newState;
+
+    }
     default:
       break;
   }
