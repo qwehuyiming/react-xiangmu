@@ -9,7 +9,7 @@ const defaultState = {
       // 单价
       price: 100,
       // 数量
-      num: 99,
+      num: 1,
       // 名称
       goods_name: "手机",
       // 图片的路径
@@ -22,7 +22,7 @@ const defaultState = {
       // 单价
       price: 100,
       // 数量
-      num: 99,
+      num: 1,
       // 名称
       goods_name: "手机",
       // 图片的路径
@@ -35,7 +35,7 @@ const defaultState = {
       // 单价
       price: 100,
       // 数量
-      num: 99,
+      num: 1,
       // 名称
       goods_name: "手机",
       // 图片的路径

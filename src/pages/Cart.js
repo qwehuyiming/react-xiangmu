@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { NavBar, Icon, SwipeAction, List, Checkbox } from 'antd-mobile';
 
 import { withRouter } from "react-router-dom";
-import { cart_check,cart_all_check } from "../store/actionCreator";
+import { cart_check, cart_all_check } from "../store/actionCreator";
 const CheckboxItem = Checkbox.CheckboxItem;
 class Cart extends Component {
   render() {
@@ -46,7 +46,7 @@ class Cart extends Component {
                       {/* 1 复选框 开始 */}
                       <div className="goods_chk_wrap">
                         {/* 受控表单  */}
-                        <CheckboxItem checked={v.isChecked} onChange={()=>{this.props.handleCartCheck(v.id)}}>
+                        <CheckboxItem checked={v.isChecked} onChange={() => { this.props.handleCartCheck(v.id) }}>
 
                         </CheckboxItem>
                       </div>
@@ -140,7 +140,7 @@ class Cart extends Component {
           {/* 全选 结束 */}
           {/* 总价 开始 */}
           <div className="all_price_wrap">
-            合计 <span className="total_price">￥ {223}</span>
+            合计 <span className="total_price">￥ {this.props.allPrice}</span>
           </div>
           {/* 总价 结束 */}
           {/* 结算 开始 */}
@@ -189,7 +189,7 @@ class Cart extends Component {
               }
             }
             `}
-            
+
           </style>
         </div>
         {/* 底部工具栏 结束 */}
@@ -198,28 +198,41 @@ class Cart extends Component {
   }
 }
 
-
+// 获取中价格
+const getTotalPrice = (arr) => {
+  let sum = 0;
+  arr.forEach(v => {
+    // 要的选中的了的商品
+    v.isChecked && (sum += v.price * v.num);
+    // if(v.isChecked){
+    //   sum+=v.price*v.num
+    // }
+  })
+  return sum;
+}
 
 const mapStateToProps = (state) => {
   // 种类的数量也等于购物车的长度 
   return {
     carts: state.cartReducer.cartList,
     // 只要购物车中的每一个商品都是选中状态，那么全选的按钮 就是 选中状态 
-    allChecked:state.cartReducer.cartList.every(v=>v.isChecked),
+    allChecked: state.cartReducer.cartList.every(v => v.isChecked),
     // 结算中的 数字 => 购物车中 选中了的数组的长度  
-    selectdNums:state.cartReducer.cartList.filter(v=>v.isChecked).length
+    selectdNums: state.cartReducer.cartList.filter(v => v.isChecked).length,
+    // 总的价格( 被选中的单价 * 数量 的叠加总和)
+    allPrice: getTotalPrice(state.cartReducer.cartList)
   }
 }
 
-const mapDispatch=(dispatch)=>{
+const mapDispatch = (dispatch) => {
   return {
-    handleCartCheck:(id)=>{
+    handleCartCheck: (id) => {
       dispatch(cart_check(id));
     },
     // 全选
-    handleCartAllCheck:(e)=>{
+    handleCartAllCheck: (e) => {
       // 获取到全选按钮的选中状态
-      let {checked}=e.target;
+      let { checked } = e.target;
       dispatch(cart_all_check(checked));
     }
   }
