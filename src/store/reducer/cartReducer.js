@@ -1,4 +1,4 @@
-import { CART_ADD } from "../actionTypes";
+import { CART_ADD ,CART_CHECKED} from "../actionTypes";
 
 
 const defaultState = {
@@ -14,7 +14,7 @@ const defaultState = {
       goods_name: "手机",
       // 图片的路径
       img_url: "http://react.zbztb.cn/upload/201504/20/thumb_201504200119256512.jpg",
-      isChecked: false
+      isChecked: true
     },
     {
       // 商品的id
@@ -81,9 +81,21 @@ export default (state = defaultState, action) => {
       }
       return newState;
     }
-
       break;
+    case CART_CHECKED:{
+      /* 
+      1 获取要操作的商品的id
+      2 找到 store中的购物车数组中的商品对象
+      3 把商品对象的选中状态 取反
+      4 返回全新的state
+       */
 
+       let newState=JSON.parse(JSON.stringify(state));
+       let index=newState.cartList.findIndex(v=>v.id===action.value.id);
+       newState.cartList[index].isChecked=!newState.cartList[index].isChecked;
+       return newState;
+    }
+    break;
     default:
       break;
   }

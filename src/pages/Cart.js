@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { NavBar, Icon, SwipeAction, List, Checkbox } from 'antd-mobile';
 
 import { withRouter } from "react-router-dom";
+import { cart_check } from "../store/actionCreator";
 const CheckboxItem = Checkbox.CheckboxItem;
 class Cart extends Component {
   render() {
@@ -45,7 +46,7 @@ class Cart extends Component {
                       {/* 1 复选框 开始 */}
                       <div className="goods_chk_wrap">
                         {/* 受控表单  */}
-                        <CheckboxItem >
+                        <CheckboxItem checked={v.isChecked} onChange={()=>{this.props.handleCartCheck(v.id)}}>
 
                         </CheckboxItem>
                       </div>
@@ -204,5 +205,12 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatch=(dispatch)=>{
+  return {
+    handleCartCheck:(id)=>{
+      dispatch(cart_check(id));
+    }
+  }
+}
 
-export default connect(mapStateToProps, null)(withRouter(Cart));
+export default connect(mapStateToProps, mapDispatch)(withRouter(Cart));

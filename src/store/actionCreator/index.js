@@ -1,4 +1,4 @@
-import { CART_ADD } from "../actionTypes";
+import { CART_ADD, CART_CHECKED } from "../actionTypes";
 
 // 1 负责新增购物车  
 export const cart_add = (goodsObj) => {
@@ -9,3 +9,12 @@ export const cart_add = (goodsObj) => {
   };
 
 }
+
+/**
+ * 切换商品的选中状态
+ * @param {Number} id 要修改的商品的id
+ */
+export const cart_check = (id) => {
+  return { type: CART_CHECKED, value: {id} };
+}
+
